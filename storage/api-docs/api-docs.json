@@ -1,0 +1,204 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Fruit Detection API Documentation",
+        "description": "API for detecting fruit ripeness using machine learning",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://freshmate-ripeness.com",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/api/detect-ripeness": {
+            "post": {
+                "tags": [
+                    "Fruit Detection"
+                ],
+                "summary": "Detect fruit ripeness from image",
+                "description": "Upload an image of a fruit to detect its ripeness",
+                "operationId": "detectRipeness",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "image": {
+                                        "description": "The fruit image to analyze",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful detection",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "fruit_type": {
+                                            "type": "string",
+                                            "example": "apple"
+                                        },
+                                        "ripeness": {
+                                            "type": "string",
+                                            "example": "ripe"
+                                        },
+                                        "confidence": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 0.95
+                                        },
+                                        "timestamp": {
+                                            "type": "string",
+                                            "format": "datetime",
+                                            "example": "2024-11-28T12:00:00Z"
+                                        },
+                                        "image_path": {
+                                            "type": "string",
+                                            "example": "/storage/scans/image.jpg"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or processing error"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/diseases-fruit": {
+            "get": {
+                "tags": [
+                    "Fruit Detection"
+                ],
+                "summary": "Get detection history",
+                "description": "Retrieve the history of fruit detections",
+                "operationId": "getDetectionHistory",
+                "responses": {
+                    "200": {
+                        "description": "List of previous detections",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "diseases_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "diseases_desc": {
+                                                        "type": "string"
+                                                    },
+                                                    "dieases_preview": {
+                                                        "type": "string"
+                                                    },
+                                                    "diseases_detail": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/supported-fruits": {
+            "get": {
+                "tags": [
+                    "Fruit Detection"
+                ],
+                "summary": "Get list of supported fruits",
+                "description": "Retrieve the list of fruits that can be detected",
+                "operationId": "getSupportedFruits",
+                "responses": {
+                    "200": {
+                        "description": "List of supported fruits",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "locale": {
+                                            "type": "string",
+                                            "example": "en_US"
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 9
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "diseases_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "diseases_desc": {
+                                                        "type": "string"
+                                                    },
+                                                    "dieases_preview": {
+                                                        "type": "string"
+                                                    },
+                                                    "diseases_detail": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Fruit Detection",
+            "description": "Fruit Detection"
+        }
+    ]
+}
